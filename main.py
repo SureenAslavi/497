@@ -1,40 +1,56 @@
-#%%writefile P5_Sureen_Aslavi.py
 import streamlit as st
 import pandas as pd
 import altair as alt
 import plotly.express as px
-st.set_page_config(
-    page_title="Gold Dashboard",
-    page_icon="🪙",
-    layout="wide",
-    initial_sidebar_state="expanded")
-
-alt.themes.enable("dark")
 import matplotlib.pyplot as plt
 import seaborn as sns
-import pandas as pd
-import numpy as np
-from google.colab import files
 import numpy as np
 
-df_reshaped = files.upload()
-
-data = pd.read_csv(list(df_reshaped.keys())[0])
-data['Date'] = pd.to_datetime(data['Date'], format='%Y-%m')
-
-
-data['Year'] = data['Date'].dt.year
-
-
-yearly_avg = data.groupby('Year')['Price'].mean().reset_index()
-
-
-fig = px.line(
-    yearly_avg,
-    x='Year',
-    y='Price',
-    title='متوسط سعر الذهب السنوي',
-    markers=True
+# Streamlit page configuration
+st.set_page_config(
+    page_title="Gold Price Dashboard",
+    page_icon="🪙",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-st.plotly_chart(fig, use_container_width=True)
+# Enable dark theme for Altair
+alt.themes.enable("dark")
+
+# App title
+st.title("📊 Gold Price Dashboard")
+
+# Load CSV file directly from the project folder
+DATA_PATH = "gold_data.csv"
+
+try:
+    data = pd.read_csv(DATA_PATH)
+
+    # Check for required columns
+    if 'Date' in data.columns and 'Price' in data.columns:
+        # Convert 'Date' column to datetime
+        data['Date'] = pd.to_datetime(data['Date'], format='%Y-%m', errors='coerce')
+        data = data.dropna(subset=['Date'])
+
+        # Extract year
+        data['Year'] = data['Date'].dt.year
+
+        # Calculate yearly average
+        yearly_avg = data.groupby('Year')['Price'].mean().reset_index()
+
+        # Plot
+        fig = px.line(
+            yearly_avg,
+            x='Year',
+            y='Price',
+            title='Average Annual Gold Price',
+            markers=True
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.error("❌ 'gold_data.csv' must contain 'Date' and 'Price' columns.")
+except FileNotFoundError:
+    st.error(f"❌ File '{DATA_PATH}' not found. Please make sure it's in the same folder as main.py.")
+except Exception as e:
+    st.error(f"An error occurred: {e}")
