@@ -5,6 +5,7 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from datetime import datetime
 
 # Streamlit page configuration
 st.set_page_config(
@@ -38,18 +39,24 @@ try:
         # Calculate yearly average
         yearly_avg = data.groupby('Year')['Price'].mean().reset_index()
 
+        # Get the current year
+        current_year = datetime.now().year
+
+        # Filter data for the last 20 years
+        last_20_years = yearly_avg[yearly_avg['Year'] >= (current_year - 20)]
+
         # Plot
         fig = px.line(
-            yearly_avg,
+            last_20_years,
             x='Year',
             y='Price',
-            title='Average Annual Gold Price',
+            title='Average Annual Gold Price (Last 20 Years)',
             markers=True
         )
 
         st.plotly_chart(fig, use_container_width=True)
     else:
-        st.error("❌ 'gold_data.csv' must contain 'Date' and 'Price' columns.")
+        st.error("❌ 'monthly.csv' must contain 'Date' and 'Price' columns.")
 except FileNotFoundError:
     st.error(f"❌ File '{DATA_PATH}' not found. Please make sure it's in the same folder as main.py.")
 except Exception as e:
