@@ -21,7 +21,7 @@ alt.themes.enable("dark")
 st.title("📊 Gold Price Dashboard")
 
 # Load CSV file directly from the project folder
-DATA_PATH = "gold_data.csv"
+DATA_PATH = "monthly.csv"
 
 try:
     data = pd.read_csv(DATA_PATH)
