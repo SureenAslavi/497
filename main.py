@@ -23,7 +23,7 @@ st.title("📊 Gold Price & Mining Production Dashboard")
 
 # Load CSV files directly from the project folder
 price_data_path = "monthly.csv"
-production_data_path = "Gold-Mining-Production-Volumes-Data-2024.csv"
+production_data_path = "Gold-Mining-Production-Volumes-Data-2024.xlsx"
 
 # Load and process Gold Price data
 try:
@@ -64,9 +64,9 @@ except FileNotFoundError:
 except Exception as e:
     st.error(f"An error occurred while processing Gold Price data: {e}")
 
-# Load and process Gold Mining Production data
+# Load and process Gold Mining Production data (Excel file)
 try:
-    production_data = pd.read_csv(production_data_path)
+    production_data = pd.read_excel(production_data_path)
 
     # Check for required columns
     if 'Country' in production_data.columns and 'Production' in production_data.columns:
@@ -87,7 +87,7 @@ try:
 
         st.plotly_chart(production_fig, use_container_width=True)
     else:
-        st.error("❌ 'Gold-Mining-Production-Volumes-Data-2024.csv' must contain 'Country' and 'Production' columns.")
+        st.error("❌ 'Gold-Mining-Production-Volumes-Data-2024.xlsx' must contain 'Country' and 'Production' columns.")
 except FileNotFoundError:
     st.error(f"❌ File '{production_data_path}' not found. Please make sure it's in the same folder as main.py.")
 except Exception as e:
