@@ -9,7 +9,7 @@ from datetime import datetime
 
 # Streamlit page configuration
 st.set_page_config(
-    page_title="Gold Price Dashboard",
+    page_title="Gold Price & Mining Production Dashboard",
     page_icon="🪙",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -19,45 +19,76 @@ st.set_page_config(
 alt.themes.enable("dark")
 
 # App title
-st.title("📊 Gold Price Dashboard")
+st.title("📊 Gold Price & Mining Production Dashboard")
 
-# Load CSV file directly from the project folder
-DATA_PATH = "monthly.csv"
+# Load CSV files directly from the project folder
+price_data_path = "monthly.csv"
+production_data_path = "Gold-Mining-Production-Volumes-Data-2024.csv"
 
+# Load and process Gold Price data
 try:
-    data = pd.read_csv(DATA_PATH)
+    price_data = pd.read_csv(price_data_path)
 
     # Check for required columns
-    if 'Date' in data.columns and 'Price' in data.columns:
+    if 'Date' in price_data.columns and 'Price' in price_data.columns:
         # Convert 'Date' column to datetime
-        data['Date'] = pd.to_datetime(data['Date'], format='%Y-%m', errors='coerce')
-        data = data.dropna(subset=['Date'])
+        price_data['Date'] = pd.to_datetime(price_data['Date'], format='%Y-%m', errors='coerce')
+        price_data = price_data.dropna(subset=['Date'])
 
         # Extract year
-        data['Year'] = data['Date'].dt.year
+        price_data['Year'] = price_data['Date'].dt.year
 
         # Calculate yearly average
-        yearly_avg = data.groupby('Year')['Price'].mean().reset_index()
+        yearly_avg_price = price_data.groupby('Year')['Price'].mean().reset_index()
 
         # Get the current year
         current_year = datetime.now().year
 
         # Filter data for the last 20 years
-        last_20_years = yearly_avg[yearly_avg['Year'] >= (current_year - 20)]
+        last_20_years_price = yearly_avg_price[yearly_avg_price['Year'] >= (current_year - 20)]
 
-        # Plot
-        fig = px.line(
-            last_20_years,
+        # Plot Gold Price Chart
+        price_fig = px.line(
+            last_20_years_price,
             x='Year',
             y='Price',
             title='Average Annual Gold Price (Last 20 Years)',
             markers=True
         )
 
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(price_fig, use_container_width=True)
     else:
         st.error("❌ 'monthly.csv' must contain 'Date' and 'Price' columns.")
 except FileNotFoundError:
-    st.error(f"❌ File '{DATA_PATH}' not found. Please make sure it's in the same folder as main.py.")
+    st.error(f"❌ File '{price_data_path}' not found. Please make sure it's in the same folder as main.py.")
 except Exception as e:
-    st.error(f"An error occurred: {e}")
+    st.error(f"An error occurred while processing Gold Price data: {e}")
+
+# Load and process Gold Mining Production data
+try:
+    production_data = pd.read_csv(production_data_path)
+
+    # Check for required columns
+    if 'Country' in production_data.columns and 'Production' in production_data.columns:
+        # Show the first few rows of the production data
+        st.subheader("Gold Mining Production Volumes")
+        st.write(production_data.head())
+
+        # Create a bar plot of Gold Production by Country
+        production_fig = px.bar(
+            production_data,
+            x='Country',
+            y='Production',
+            title='Gold Mining Production by Country (2024)',
+            labels={'Production': 'Gold Production (Tonnes)', 'Country': 'Country'},
+            color='Production',
+            color_continuous_scale='gold'
+        )
+
+        st.plotly_chart(production_fig, use_container_width=True)
+    else:
+        st.error("❌ 'Gold-Mining-Production-Volumes-Data-2024.csv' must contain 'Country' and 'Production' columns.")
+except FileNotFoundError:
+    st.error(f"❌ File '{production_data_path}' not found. Please make sure it's in the same folder as main.py.")
+except Exception as e:
+    st.error(f"An error occurred while processing Gold Mining Production data: {e}")
