@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from datetime import datetime
+from wordcloud import WordCloud
 
 # Streamlit page configuration
 st.set_page_config(
