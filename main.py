@@ -68,6 +68,30 @@ with col[0]:
         st.error(f"An error occurred while processing Gold Price data: {e}")
     # Load and process Gold Use data from Excel
     use_data_path = "gold_use.xlsx"
+
+    # Heatmap of Gold Investment by Region
+st.subheader("🔥 Gold Investment Heatmap by Region and Year")
+
+investment_data_path = "gold_investment_by_region.csv"  
+
+try:
+    investment_df = pd.read_csv(investment_data_path)
+
+    if 'Region' in investment_df.columns and 'Year' in investment_df.columns and 'Investment_Volume_Million_USD' in investment_df.columns:
+        
+        heatmap_data = investment_df.pivot(index='Region', columns='Year', values='Investment_Volume_Million_USD')
+        
+        fig, ax = plt.subplots(figsize=(12, 6))
+        sns.heatmap(heatmap_data, annot=True, fmt=".0f", cmap="YlGnBu", linewidths=0.5, ax=ax)
+        ax.set_title("Investment Volume in Gold by Region and Year (Million USD)")
+        st.pyplot(fig)
+    else:
+        st.error("❌ 'gold_investment_by_region.csv' must contain 'Region', 'Year', and 'Investment_Volume_Million_USD' columns.")
+except FileNotFoundError:
+    st.error("❌ File 'gold_investment_by_region.csv' not found. Please ensure it's in your project folder.")
+except Exception as e:
+    st.error(f"An error occurred while loading the investment heatmap: {e}")
+
  
 with col[2]:   
     try:
