@@ -63,37 +63,6 @@ except FileNotFoundError:
     st.error(f"❌ File '{price_data_path}' not found. Please make sure it's in the same folder as main.py.")
 except Exception as e:
     st.error(f"An error occurred while processing Gold Price data: {e}")
-"""
-# Load and process Gold Mining Production data (Excel file)
-try:
-    production_data = pd.read_excel(production_data_path)
-
-    # Check for required columns
-    if 'Country' in production_data.columns and 'Production' in production_data.columns:
-        # Show the first few rows of the production data
-        st.subheader("Gold Mining Production Volumes")
-        st.write(production_data.head())
-
-        # Create a bar plot of Gold Production by Country
-        production_fig = px.bar(
-            production_data,
-            x='Country',
-            y='Production',
-            title='Gold Mining Production by Country (2024)',
-            labels={'Production': 'Gold Production (Tonnes)', 'Country': 'Country'},
-            color='Production',
-            color_continuous_scale='gold'
-        )
-
-        st.plotly_chart(production_fig, use_container_width=True)
-    else:
-        st.error("❌ 'Gold-Mining-Production-Volumes-Data-2024.xlsx' must contain 'Country' and 'Production' columns.")
-except FileNotFoundError:
-    st.error(f"❌ File '{production_data_path}' not found. Please make sure it's in the same folder as main.py.")
-except Exception as e:
-    st.error(f"An error occurred while processing Gold Mining Production data: {e}")
-
-"""
 # Load and process Gold Use data from Excel
 use_data_path = "gold_use.xlsx"
 
