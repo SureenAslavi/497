@@ -143,14 +143,14 @@ with col[1]:
         df_gold_reserves = pd.read_csv(gold_reserves_file)
     
         # Ensure the file contains the necessary columns
-        if 'Country' in df_gold_reserves.columns and 'Tonnes' in df_gold_reserves.columns:
+        if 'Country ' in df_gold_reserves.columns and 'Tonnes' in df_gold_reserves.columns:
             # Create the choropleth map
             fig_gold_reserves = px.choropleth(
                 df_gold_reserves, 
-                locations="Country", 
+                locations="Country ", 
                 locationmode="country names",  # Recognize country names
                 color="Tonnes", 
-                hover_name="Country", 
+                hover_name="Country ", 
                 hover_data=["Tonnes"],
                 color_continuous_scale="YlOrRd",  # You can choose other color scales (e.g., "Viridis", "Cividis", etc.)
                 labels={"Tonnes": "Gold Reserves (Tonnes)"},
