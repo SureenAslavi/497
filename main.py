@@ -72,7 +72,7 @@ with col[0]:
     # Heatmap of Gold Investment by Region
 st.subheader("🔥 Gold Investment Heatmap by Region and Year")
 
-investment_data_path = "gold_investment_by_region.csv"  
+investment_data_path = "Gold_Investment_Statistics_Dataset.csv"  
 
 try:
     investment_df = pd.read_csv(investment_data_path)
