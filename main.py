@@ -81,10 +81,19 @@ with col[0]:
             
             heatmap_data = investment_df.pivot(index='Region', columns='Year', values='Investment_Volume_Million_USD')
             
-            fig, ax = plt.subplots(figsize=(12, 6))
-            sns.heatmap(heatmap_data, annot=True, fmt=".0f", cmap="YlGnBu", linewidths=0.5, ax=ax)
-            ax.set_title("Investment Volume in Gold by Region and Year (Million USD)")
-            st.pyplot(fig)
+            heatmap_data_reset = heatmap_data.reset_index().melt(id_vars='Region', var_name='Year', value_name='Investment Volume (Million USD)')
+            fig = px.density_heatmap(
+                heatmap_data_reset,
+                x='Year',
+                y='Region',
+                z='Investment Volume (Million USD)',
+                color_continuous_scale='YlGnBu',
+                title='Investment Volume in Gold by Region and Year (Million USD)',
+                nbinsx=len(heatmap_data.columns),
+                nbinsy=len(heatmap_data.index)
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
         else:
             st.error("❌ 'gold_investment_by_region.csv' must contain 'Region', 'Year', and 'Investment_Volume_Million_USD' columns.")
     except FileNotFoundError:
