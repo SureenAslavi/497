@@ -67,7 +67,8 @@ with col[0]:
         st.error(f"An error occurred while processing Gold Price data: {e}")
     # Load and process Gold Use data from Excel
     use_data_path = "gold_use.xlsx"
-    
+ 
+with col[1]:   
     try:
         use_data = pd.read_excel(use_data_path)
     
