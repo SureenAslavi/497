@@ -63,7 +63,7 @@ except FileNotFoundError:
     st.error(f"❌ File '{price_data_path}' not found. Please make sure it's in the same folder as main.py.")
 except Exception as e:
     st.error(f"An error occurred while processing Gold Price data: {e}")
-
+"""
 # Load and process Gold Mining Production data (Excel file)
 try:
     production_data = pd.read_excel(production_data_path)
@@ -93,7 +93,7 @@ except FileNotFoundError:
 except Exception as e:
     st.error(f"An error occurred while processing Gold Mining Production data: {e}")
 
-
+"""
 # Load and process Gold Use data from Excel
 use_data_path = "gold_useuse.xlsx"
 
