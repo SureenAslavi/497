@@ -73,7 +73,7 @@ with col[0]:
         use_data = pd.read_excel(use_data_path)
     
         if 'Category' in use_data.columns and 'Amount' in use_data.columns:
-            st.subheader("Gold Usage by Sector")
+            #st.subheader("Gold Usage by Sector")
             # Sort the data by 'Amount' in descending order
             use_data = use_data.sort_values(by='Amount', ascending=False)
             # Create a line plot using Plotly
