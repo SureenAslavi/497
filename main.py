@@ -27,7 +27,7 @@ price_data_path = "monthly.csv"
 production_data_path = "Gold-Mining-Production-Volumes-Data-2024.xlsx"
 
 col = st.columns((2, 4.5, 2), gap='medium')
-with col[2]:
+with col[0]:
 # Load and process Gold Price data
     try:
         price_data = pd.read_csv(price_data_path)
@@ -69,7 +69,7 @@ with col[2]:
     # Load and process Gold Use data from Excel
     use_data_path = "gold_use.xlsx"
  
-with col[1]:   
+with col[2]:   
     try:
         use_data = pd.read_excel(use_data_path)
     
@@ -96,7 +96,7 @@ with col[1]:
     except Exception as e:
         st.error(f"An error occurred while processing Gold Usage data: {e}")
   
-with col[2]:
+with col[1]:
     st.markdown("---")
     st.subheader("☁️ Word Cloud of Headlines by Country")
     
