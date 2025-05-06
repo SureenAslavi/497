@@ -95,7 +95,7 @@ except Exception as e:
 
 """
 # Load and process Gold Use data from Excel
-use_data_path = "gold_useuse.xlsx"
+use_data_path = "gold_use.xlsx"
 
 try:
     use_data = pd.read_excel(use_data_path)
