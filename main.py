@@ -132,7 +132,8 @@ with col[1]:
         st.error(f"❌ File '{news_data_path}' not found. Please make sure it's in the same folder as main.py.")
     except Exception as e:
         st.error(f"An error occurred while processing the news data: {e}")
-    gold_reserves_file = "gold_reserves.csv"  # Make sure the CSV file path is correct
+
+gold_reserves_file = "World_official_gold_holdings_as_of_May2025.csv"  # Make sure the CSV file path is correct
 
 # Streamlit app
 st.title("📊 Gold Reserves by Country")
