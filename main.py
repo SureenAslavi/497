@@ -145,16 +145,21 @@ with col[1]:
         # Ensure the file contains the necessary columns
         if 'Country ' in df_gold_reserves.columns and 'Tonnes' in df_gold_reserves.columns:
             # Create the choropleth map
+           # Sort by Tonnes descending and create Rank
+            df_gold_reserves = df_gold_reserves.sort_values(by="Tonnes", ascending=False).reset_index(drop=True)
+            df_gold_reserves["Rank"] = df_gold_reserves.index + 1  # Rank starts from 1
+            
+            # Use Rank as the color dimension
             fig_gold_reserves = px.choropleth(
-                df_gold_reserves, 
-                locations="Country ", 
-                locationmode="country names",  # Recognize country names
-                color="Tonnes", 
-                hover_name="Country ", 
-                hover_data=["Tonnes"],
-                color_continuous_scale="YlOrRd",  # You can choose other color scales (e.g., "Viridis", "Cividis", etc.)
-                labels={"Tonnes": "Gold Reserves (Tonnes)"},
-                title="Gold Reserves by Country (Tonnes)"
+                df_gold_reserves,
+                locations="Country",
+                locationmode="country names",
+                color="Rank",  # use Rank instead of Tonnes
+                hover_name="Country",
+                hover_data={"Tonnes": True, "Rank": True, "Country": False},
+                color_continuous_scale="YlOrRd_r",  # Reversed so top rank is darker
+                labels={"Rank": "Rank (1 = Most Reserves)", "Tonnes": "Gold Reserves (Tonnes)"},
+                title="Gold Reserves by Country (Ranked)"
             )
     
             # Display the map in Streamlit
