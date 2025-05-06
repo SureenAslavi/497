@@ -133,37 +133,37 @@ with col[1]:
     except Exception as e:
         st.error(f"An error occurred while processing the news data: {e}")
 
-gold_reserves_file = "World_official_gold_holdings_as_of_May2025.csv"  # Make sure the CSV file path is correct
-
-# Streamlit app
-st.title("📊 Gold Reserves by Country")
-
-# Read the gold reserves data from the CSV file
-try:
-    df_gold_reserves = pd.read_csv(gold_reserves_file)
-
-    # Ensure the file contains the necessary columns
-    if 'Country' in df_gold_reserves.columns and 'Tonnes' in df_gold_reserves.columns:
-        # Create the choropleth map
-        fig_gold_reserves = px.choropleth(
-            df_gold_reserves, 
-            locations="Country", 
-            locationmode="country names",  # Recognize country names
-            color="Tonnes", 
-            hover_name="Country", 
-            hover_data=["Tonnes"],
-            color_continuous_scale="YlOrRd",  # You can choose other color scales (e.g., "Viridis", "Cividis", etc.)
-            labels={"Tonnes": "Gold Reserves (Tonnes)"},
-            title="Gold Reserves by Country (Tonnes)"
-        )
-
-        # Display the map in Streamlit
-        st.plotly_chart(fig_gold_reserves, use_container_width=True)
-
-    else:
-        st.error("❌ The CSV file must contain 'Country' and 'Tonnes' columns.")
-        
-except FileNotFoundError:
-    st.error(f"❌ File '{gold_reserves_file}' not found. Please make sure it's in the same folder as your app.")
-except Exception as e:
-    st.error(f"An error occurred: {e}")
+    gold_reserves_file = "World_official_gold_holdings_as_of_May2025.csv"  # Make sure the CSV file path is correct
+    
+    # Streamlit app
+    st.title("📊 Gold Reserves by Country")
+    
+    # Read the gold reserves data from the CSV file
+    try:
+        df_gold_reserves = pd.read_csv(gold_reserves_file)
+    
+        # Ensure the file contains the necessary columns
+        if 'Country' in df_gold_reserves.columns and 'Tonnes' in df_gold_reserves.columns:
+            # Create the choropleth map
+            fig_gold_reserves = px.choropleth(
+                df_gold_reserves, 
+                locations="Country", 
+                locationmode="country names",  # Recognize country names
+                color="Tonnes", 
+                hover_name="Country", 
+                hover_data=["Tonnes"],
+                color_continuous_scale="YlOrRd",  # You can choose other color scales (e.g., "Viridis", "Cividis", etc.)
+                labels={"Tonnes": "Gold Reserves (Tonnes)"},
+                title="Gold Reserves by Country (Tonnes)"
+            )
+    
+            # Display the map in Streamlit
+            st.plotly_chart(fig_gold_reserves, use_container_width=True)
+    
+        else:
+            st.error("❌ The CSV file must contain 'Country' and 'Tonnes' columns.")
+            
+    except FileNotFoundError:
+        st.error(f"❌ File '{gold_reserves_file}' not found. Please make sure it's in the same folder as your app.")
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
