@@ -97,7 +97,7 @@ with col[2]:
         st.error(f"An error occurred while processing Gold Usage data: {e}")
   
 with col[1]:
-    st.markdown("---")
+
     st.subheader("☁️ Word Cloud of Headlines by Country")
     
     news_data_path = "Gold_News_Headlines_Dataset.csv"
