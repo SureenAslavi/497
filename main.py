@@ -104,13 +104,14 @@ try:
         st.subheader("Gold Usage by Sector")
 
         # Create a line plot using Plotly
-        use_fig = px.line(
+        use_fig = px.bar(
             use_data,
             x='Category',
             y='Amount',
             title='Gold Usage by Sector',
             labels={'Amount': 'Gold Use (Tonnes)', 'Category': 'Sector'},
-            markers=True
+            color='Amount',
+            color_continuous_scale='sunset'
         )
 
         st.plotly_chart(use_fig, use_container_width=True)
