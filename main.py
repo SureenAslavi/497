@@ -25,8 +25,8 @@ st.title("📊 Gold Price & Mining Production Dashboard")
 price_data_path = "monthly.csv"
 production_data_path = "Gold-Mining-Production-Volumes-Data-2024.xlsx"
 
-col = st.columns((1.5, 4.5, 2), gap='medium')
-with col[0]:
+col = st.columns((2, 4.5, 2), gap='medium')
+with col[1]:
 # Load and process Gold Price data
     try:
         price_data = pd.read_csv(price_data_path)
@@ -68,7 +68,7 @@ with col[0]:
     # Load and process Gold Use data from Excel
     use_data_path = "gold_use.xlsx"
  
-with col[1]:   
+with col[0]:   
     try:
         use_data = pd.read_excel(use_data_path)
     
