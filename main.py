@@ -102,23 +102,22 @@ try:
 
     if 'Category' in use_data.columns and 'Amount' in use_data.columns:
         st.subheader("Gold Usage by Sector")
-        st.write(use_data)
 
-        # Create a bar chart using Plotly
-        use_fig = px.bar(
+        # Create a line plot using Plotly
+        use_fig = px.line(
             use_data,
             x='Category',
             y='Amount',
             title='Gold Usage by Sector',
             labels={'Amount': 'Gold Use (Tonnes)', 'Category': 'Sector'},
-            color='Amount',
-            color_continuous_scale='sunset'
+            markers=True
         )
 
         st.plotly_chart(use_fig, use_container_width=True)
     else:
-        st.error("❌ 'gold_useuse.xlsx' must contain 'Category' and 'Amount' columns.")
+        st.error("❌ 'gold_use.xlsx' must contain 'Category' and 'Amount' columns.")
 except FileNotFoundError:
     st.error(f"❌ File '{use_data_path}' not found. Please make sure it's in the same folder as main.py.")
 except Exception as e:
     st.error(f"An error occurred while processing Gold Usage data: {e}")
+
