@@ -139,34 +139,29 @@ with col[1]:
     st.title("📊 Gold Reserves by Country")
     
     # Read the gold reserves data from the CSV file
+  # Read and clean the gold reserves data from the CSV file
     try:
         df_gold_reserves = pd.read_csv(gold_reserves_file)
+        df_gold_reserves.columns = df_gold_reserves.columns.str.strip()  # <--- strip whitespace from column names
     
         # Ensure the file contains the necessary columns
-        if 'Country ' in df_gold_reserves.columns and 'Tonnes' in df_gold_reserves.columns:
+        if 'Country' in df_gold_reserves.columns and 'Tonnes' in df_gold_reserves.columns:
             # Create the choropleth map
-           # Sort by Tonnes descending and create Rank
-            df_gold_reserves = df_gold_reserves.sort_values(by="Tonnes", ascending=False).reset_index(drop=True)
-            df_gold_reserves["Rank"] = df_gold_reserves.index + 1  # Rank starts from 1
-            
-            # Use Rank as the color dimension
             fig_gold_reserves = px.choropleth(
-                df_gold_reserves,
-                locations="Country",
-                locationmode="country names",
-                color="Rank",  # use Rank instead of Tonnes
-                hover_name="Country",
-                hover_data={"Tonnes": True, "Rank": True, "Country": False},
-                color_continuous_scale="YlOrRd_r",  # Reversed so top rank is darker
-                labels={"Rank": "Rank (1 = Most Reserves)", "Tonnes": "Gold Reserves (Tonnes)"},
-                title="Gold Reserves by Country (Ranked)"
+                df_gold_reserves, 
+                locations="Country", 
+                locationmode="country names",  
+                color="Tonnes", 
+                hover_name="Country", 
+                hover_data=["Tonnes"],
+                color_continuous_scale="YlOrRd",
+                labels={"Tonnes": "Gold Reserves (Tonnes)"},
+                title="Gold Reserves by Country (Tonnes)"
             )
-    
-            # Display the map in Streamlit
             st.plotly_chart(fig_gold_reserves, use_container_width=True)
-    
         else:
             st.error("❌ The CSV file must contain 'Country' and 'Tonnes' columns.")
+
             
     except FileNotFoundError:
         st.error(f"❌ File '{gold_reserves_file}' not found. Please make sure it's in the same folder as your app.")
