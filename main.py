@@ -102,7 +102,8 @@ try:
 
     if 'Category' in use_data.columns and 'Amount' in use_data.columns:
         st.subheader("Gold Usage by Sector")
-
+        # Sort the data by 'Amount' in descending order
+        use_data = use_data.sort_values(by='Amount', ascending=False)
         # Create a line plot using Plotly
         use_fig = px.bar(
             use_data,
