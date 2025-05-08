@@ -69,20 +69,24 @@ with col[0]:
     # Load and process Gold Use data from Excel
     use_data_path = "gold_use.xlsx"
 
-    # Heatmap of Gold Investment by Region
     st.subheader("🔥 Gold Investment Heatmap by Region and Year")
-    
-    investment_data_path = "Gold_Investment_Statistics_Dataset.csv"  
+
+    investment_data_path = "Gold_Investment_Statistics_Dataset.csv"
     
     try:
         investment_df = pd.read_csv(investment_data_path)
     
         if 'Region' in investment_df.columns and 'Year' in investment_df.columns and 'Investment_Volume_Million_USD' in investment_df.columns:
-            
+    
             heatmap_data = investment_df.pivot(index='Region', columns='Year', values='Investment_Volume_Million_USD')
-            
             heatmap_data_reset = heatmap_data.reset_index().melt(id_vars='Region', var_name='Year', value_name='Investment Volume (Million USD)')
+    
+            # نحول السنة إلى نص
             heatmap_data_reset['Year'] = heatmap_data_reset['Year'].astype(str)
+    
+            # نجهز ترتيب السنوات يدويًا لضمان ظهورها كلها
+            unique_years = sorted(heatmap_data_reset['Year'].unique().tolist())
+    
             fig = px.density_heatmap(
                 heatmap_data_reset,
                 x='Year',
@@ -90,18 +94,26 @@ with col[0]:
                 z='Investment Volume (Million USD)',
                 color_continuous_scale='YlGnBu',
                 title='Investment Volume in Gold by Region and Year (Million USD)',
-                nbinsx=len(heatmap_data.columns),
-                nbinsy=len(heatmap_data.index)
+                category_orders={"Year": unique_years}  
             )
+    
+      
+            fig.update_layout(
+                xaxis=dict(
+                    tickmode='array',
+                    tickvals=unique_years,
+                    ticktext=unique_years
+                )
+            )
+    
             st.plotly_chart(fig, use_container_width=True)
-
+    
         else:
             st.error("❌ 'gold_investment_by_region.csv' must contain 'Region', 'Year', and 'Investment_Volume_Million_USD' columns.")
     except FileNotFoundError:
         st.error("❌ File 'gold_investment_by_region.csv' not found. Please ensure it's in your project folder.")
     except Exception as e:
         st.error(f"An error occurred while loading the investment heatmap: {e}")
-
  
 with col[2]:   
     try:
