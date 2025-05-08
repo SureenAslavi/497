@@ -78,19 +78,34 @@ with col[0]:
     
         if 'Region' in investment_df.columns and 'Year' in investment_df.columns and 'Investment_Volume_Million_USD' in investment_df.columns:
     
+            # Pivot the data
             heatmap_data = investment_df.pivot(index='Region', columns='Year', values='Investment_Volume_Million_USD')
     
-            # نحول الأعمدة إلى نص لضمان ظهور كل السنوات
+            # Convert column names (Years) to strings to ensure categorical display
             heatmap_data.columns = heatmap_data.columns.astype(str)
     
+            # Get the x-axis (years) and y-axis (regions)
+            x_years = list(heatmap_data.columns)
+            y_regions = list(heatmap_data.index)
+    
+            # Create heatmap
             fig = px.imshow(
-                heatmap_data,
+                heatmap_data.values,
                 labels=dict(x="Year", y="Region", color="Investment Volume (Million USD)"),
-                x=heatmap_data.columns,
-                y=heatmap_data.index,
+                x=x_years,
+                y=y_regions,
                 color_continuous_scale='YlGnBu',
                 aspect="auto",
                 title='Investment Volume in Gold by Region and Year (Million USD)'
+            )
+    
+            # Force display of all x-axis ticks (years)
+            fig.update_layout(
+                xaxis=dict(
+                    tickmode='array',
+                    tickvals=list(range(len(x_years))),
+                    ticktext=x_years
+                )
             )
     
             st.plotly_chart(fig, use_container_width=True)
