@@ -232,7 +232,7 @@ with col[1]:
             with st.container():
                 st.plotly_chart(
                     fig, 
-                    use_container_width=True,  # Fills container
+                    use_container_width=False,  # Fills container
                     config={'displayModeBar': False}  # Cleaner view
                 )
                 
