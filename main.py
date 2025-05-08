@@ -26,7 +26,7 @@ st.title("📊 Gold Price & Mining Production Dashboard")
 price_data_path = "monthly.csv"
 production_data_path = "Gold-Mining-Production-Volumes-Data-2024.xlsx"
 
-col = st.columns((4, 4, 4), gap='medium')
+col = st.columns((4, 10, 4), gap='medium')
 with col[0]:
 # Load and process Gold Price data
     try:
@@ -202,9 +202,9 @@ with col[1]:
                 color_continuous_scale="YlOrRd",
                 range_color=(0, df_gold_reserves["Tonnes"].max()),  # Better color distribution
                 labels={"Tonnes": "Gold Reserves (Tonnes)"},
-                title="<b>Gold Reserves by Country (Tonnes)</b>",
-                height=650,  # Custom height
-                width=1000    # Custom width
+                title="<b>Gold Reserves by Country (Tonnes)</b>"
+                #height=650,  # Custom height
+                #width=1000    # Custom width
             )
     
             # Enhanced map styling
