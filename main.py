@@ -185,16 +185,12 @@ with col[1]:
     
     # Streamlit app
     st.title("📊 Gold Reserves by Country")
-    
-    # Read the gold reserves data from the CSV file
-  # Read and clean the gold reserves data from the CSV file
+
     try:
         df_gold_reserves = pd.read_csv(gold_reserves_file)
-        df_gold_reserves.columns = df_gold_reserves.columns.str.strip()  # <--- strip whitespace from column names
+        df_gold_reserves.columns = df_gold_reserves.columns.str.strip()  # Clean column names
     
-        # Ensure the file contains the necessary columns
         if 'Country' in df_gold_reserves.columns and 'Tonnes' in df_gold_reserves.columns:
-            # Create the choropleth map
             fig_gold_reserves = px.choropleth(
                 df_gold_reserves, 
                 locations="Country", 
@@ -204,14 +200,23 @@ with col[1]:
                 hover_data=["Tonnes"],
                 color_continuous_scale="YlOrRd",
                 labels={"Tonnes": "Gold Reserves (Tonnes)"},
-                title="Gold Reserves by Country (Tonnes)"
+                title="Gold Reserves by Country (Tonnes)",
+                height=600  # <--- Larger map height (adjust as needed)
             )
-            st.plotly_chart(fig_gold_reserves, use_container_width=True)
+            
+            # Optional: Adjust map zoom/center (e.g., focus on a specific region)
+            fig_gold_reserves.update_geos(
+                projection_type="natural earth",  # More global view
+                # center=dict(lat=30, lon=0),  # Uncomment to center on a region
+                # scope="asia"  # Uncomment to zoom to a continent
+            )
+            
+            st.plotly_chart(fig_gold_reserves, use_container_width=True)  # Expands to container width
+            
         else:
             st.error("❌ The CSV file must contain 'Country' and 'Tonnes' columns.")
-
-            
+    
     except FileNotFoundError:
-        st.error(f"❌ File '{gold_reserves_file}' not found. Please make sure it's in the same folder as your app.")
+        st.error(f"❌ File '{gold_reserves_file}' not found. Please check your directory.")
     except Exception as e:
         st.error(f"An error occurred: {e}")
