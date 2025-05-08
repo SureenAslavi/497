@@ -187,7 +187,7 @@ with col[1]:
     st.title("📊 Gold Reserves by Country")
 
     try:
-        df_gold_reserves = pd.read_csv("gold_reserves.csv")  # Replace with your filename
+        df_gold_reserves = pd.read_csv(gold_reserves_file)  # Replace with your filename
         df_gold_reserves.columns = df_gold_reserves.columns.str.strip()
     
         if {'Country', 'Tonnes'}.issubset(df_gold_reserves.columns):
