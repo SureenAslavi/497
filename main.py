@@ -187,36 +187,59 @@ with col[1]:
     st.title("📊 Gold Reserves by Country")
 
     try:
-        df_gold_reserves = pd.read_csv(gold_reserves_file)
-        df_gold_reserves.columns = df_gold_reserves.columns.str.strip()  # Clean column names
+        df_gold_reserves = pd.read_csv("gold_reserves.csv")  # Replace with your filename
+        df_gold_reserves.columns = df_gold_reserves.columns.str.strip()
     
-        if 'Country' in df_gold_reserves.columns and 'Tonnes' in df_gold_reserves.columns:
-            fig_gold_reserves = px.choropleth(
-                df_gold_reserves, 
-                locations="Country", 
-                locationmode="country names",  
-                color="Tonnes", 
-                hover_name="Country", 
+        if {'Country', 'Tonnes'}.issubset(df_gold_reserves.columns):
+            # Create choropleth with custom size
+            fig = px.choropleth(
+                df_gold_reserves,
+                locations="Country",
+                locationmode="country names",
+                color="Tonnes",
+                hover_name="Country",
                 hover_data=["Tonnes"],
                 color_continuous_scale="YlOrRd",
+                range_color=(0, df_gold_reserves["Tonnes"].max()),  # Better color distribution
                 labels={"Tonnes": "Gold Reserves (Tonnes)"},
-                title="Gold Reserves by Country (Tonnes)",
-                height=600  # <--- Larger map height (adjust as needed)
+                title="<b>Gold Reserves by Country (Tonnes)</b>",
+                height=650,  # Custom height
+                width=1000    # Custom width
             )
-            
-            # Optional: Adjust map zoom/center (e.g., focus on a specific region)
-            fig_gold_reserves.update_geos(
-                projection_type="natural earth",  # More global view
-                # center=dict(lat=30, lon=0),  # Uncomment to center on a region
-                # scope="asia"  # Uncomment to zoom to a continent
+    
+            # Enhanced map styling
+            fig.update_geos(
+                projection_type="natural earth",
+                showcountries=True,
+                showframe=False,
+                landcolor="lightgray",
+                subunitcolor="white"
             )
-            
-            st.plotly_chart(fig_gold_reserves, use_container_width=True)  # Expands to container width
-            
+    
+            # Layout improvements
+            fig.update_layout(
+                margin=dict(l=0, r=0, t=80, b=0),  # Tight margins
+                title_x=0.5,  # Center title
+                title_font=dict(size=24),
+                coloraxis_colorbar=dict(
+                    thickness=15,
+                    len=0.75,
+                    title_side="right"
+                )
+            )
+    
+            # Display with custom container
+            with st.container():
+                st.plotly_chart(
+                    fig, 
+                    use_container_width=True,  # Fills container
+                    config={'displayModeBar': False}  # Cleaner view
+                )
+                
         else:
-            st.error("❌ The CSV file must contain 'Country' and 'Tonnes' columns.")
+            st.error("❌ CSV must contain 'Country' and 'Tonnes' columns")
     
     except FileNotFoundError:
-        st.error(f"❌ File '{gold_reserves_file}' not found. Please check your directory.")
+        st.error("❌ File not found. Please check 'gold_reserves.csv' exists")
     except Exception as e:
-        st.error(f"An error occurred: {e}")
+        st.error(f"❌ Error: {str(e)}")
