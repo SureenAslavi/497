@@ -79,31 +79,18 @@ with col[0]:
         if 'Region' in investment_df.columns and 'Year' in investment_df.columns and 'Investment_Volume_Million_USD' in investment_df.columns:
     
             heatmap_data = investment_df.pivot(index='Region', columns='Year', values='Investment_Volume_Million_USD')
-            heatmap_data_reset = heatmap_data.reset_index().melt(id_vars='Region', var_name='Year', value_name='Investment Volume (Million USD)')
     
-            # نحول السنة إلى نص
-            heatmap_data_reset['Year'] = heatmap_data_reset['Year'].astype(str)
+            # نحول الأعمدة إلى نص لضمان ظهور كل السنوات
+            heatmap_data.columns = heatmap_data.columns.astype(str)
     
-            # نجهز ترتيب السنوات يدويًا لضمان ظهورها كلها
-            unique_years = sorted(heatmap_data_reset['Year'].unique().tolist())
-    
-            fig = px.density_heatmap(
-                heatmap_data_reset,
-                x='Year',
-                y='Region',
-                z='Investment Volume (Million USD)',
+            fig = px.imshow(
+                heatmap_data,
+                labels=dict(x="Year", y="Region", color="Investment Volume (Million USD)"),
+                x=heatmap_data.columns,
+                y=heatmap_data.index,
                 color_continuous_scale='YlGnBu',
-                title='Investment Volume in Gold by Region and Year (Million USD)',
-                category_orders={"Year": unique_years}  
-            )
-    
-      
-            fig.update_layout(
-                xaxis=dict(
-                    tickmode='array',
-                    tickvals=unique_years,
-                    ticktext=unique_years
-                )
+                aspect="auto",
+                title='Investment Volume in Gold by Region and Year (Million USD)'
             )
     
             st.plotly_chart(fig, use_container_width=True)
