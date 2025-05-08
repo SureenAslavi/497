@@ -97,7 +97,7 @@ with col[0]:
                 tickmode='array',
                 tickvals=heatmap_data.columns,  # All years as values
                 ticktext=heatmap_data.columns,  # All years as labels
-                tickangle=45,  # Rotate labels for better readability
+                tickangle=0, 
                 tickfont=dict(size=10)  # Adjust font size if needed
             )
             
