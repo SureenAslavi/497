@@ -75,48 +75,48 @@ with col[0]:
     
     try:
         investment_df = pd.read_csv(investment_data_path)
-    
+        
         if 'Region' in investment_df.columns and 'Year' in investment_df.columns and 'Investment_Volume_Million_USD' in investment_df.columns:
-    
-            # Pivot the data
+            # Create pivot table
             heatmap_data = investment_df.pivot(index='Region', columns='Year', values='Investment_Volume_Million_USD')
-    
-            # Convert column names (Years) to strings to ensure categorical display
-            heatmap_data.columns = heatmap_data.columns.astype(str)
-    
-            # Get the x-axis (years) and y-axis (regions)
-            x_years = list(heatmap_data.columns)
-            y_regions = list(heatmap_data.index)
-    
+            heatmap_data.columns = heatmap_data.columns.astype(str)  # Convert years to strings
+            
             # Create heatmap
             fig = px.imshow(
-                heatmap_data.values,
+                heatmap_data,
                 labels=dict(x="Year", y="Region", color="Investment Volume (Million USD)"),
-                x=x_years,
-                y=y_regions,
-                color_continuous_scale='YlGnBu',
+                x=heatmap_data.columns,
+                y=heatmap_data.index,
+                color_continuous_scale='YlOrRd',  # Gold-appropriate color scale
                 aspect="auto",
-                title='Investment Volume in Gold by Region and Year (Million USD)'
+                title='Gold Investment Volume by Region and Year (Million USD)'
             )
-    
-            # Force display of all x-axis ticks (years)
+            
+            # Customize x-axis to show ALL years
+            fig.update_xaxes(
+                tickmode='array',
+                tickvals=heatmap_data.columns,  # All years as values
+                ticktext=heatmap_data.columns,  # All years as labels
+                tickangle=45,  # Rotate labels for better readability
+                tickfont=dict(size=10)  # Adjust font size if needed
+            )
+            
+            # Improve layout
             fig.update_layout(
-                xaxis=dict(
-                    tickmode='array',
-                    tickvals=list(range(len(x_years))),
-                    ticktext=x_years
-                )
+                margin=dict(l=50, r=50, b=100, t=50),  # Adjust margins
+                xaxis_title="Year",
+                yaxis_title="Region",
+                coloraxis_colorbar=dict(title="USD (Millions)")
             )
-    
+            
             st.plotly_chart(fig, use_container_width=True)
-    
+            
         else:
-            st.error("❌ 'gold_investment_by_region.csv' must contain 'Region', 'Year', and 'Investment_Volume_Million_USD' columns.")
+            st.error("❌ CSV file must contain 'Region', 'Year', and 'Investment_Volume_Million_USD' columns.")
     except FileNotFoundError:
-        st.error("❌ File 'gold_investment_by_region.csv' not found. Please ensure it's in your project folder.")
+        st.error("❌ CSV file not found. Please ensure it's in your project directory.")
     except Exception as e:
-        st.error(f"An error occurred while loading the investment heatmap: {e}")
- 
+        st.error(f"An error occurred while generating the heatmap: {e}")
 with col[2]:   
     try:
         use_data = pd.read_excel(use_data_path)
