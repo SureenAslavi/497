@@ -82,6 +82,7 @@ with col[0]:
             heatmap_data = investment_df.pivot(index='Region', columns='Year', values='Investment_Volume_Million_USD')
             
             heatmap_data_reset = heatmap_data.reset_index().melt(id_vars='Region', var_name='Year', value_name='Investment Volume (Million USD)')
+            heatmap_data_reset['Year'] = heatmap_data_reset['Year'].astype(str)
             fig = px.density_heatmap(
                 heatmap_data_reset,
                 x='Year',
