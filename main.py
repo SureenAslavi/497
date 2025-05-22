@@ -134,14 +134,14 @@ with col[2]:
             labels={'Amount': 'Gold Use (Tonnes)', 'Category': 'Sector'},
             color='Category',  # كل عمود بلون مختلف
             color_discrete_sequence=px.colors.qualitative.Set2  # أو اختاري غيرها مثل 'Pastel', 'Bold', إلخ
-        )
+            )
         
-        use_fig.update_layout(
-            xaxis=dict(tickangle=0),  # يخلي الكتابة مستقيمة
-            legend_title_text='Sector'  # عنوان للـ legend
-        )
-    
-        st.plotly_chart(use_fig, use_container_width=True)
+            use_fig.update_layout(
+                xaxis=dict(tickangle=0),  # يخلي الكتابة مستقيمة
+                legend_title_text='Sector'  # عنوان للـ legend
+            )
+        
+            st.plotly_chart(use_fig, use_container_width=True)
 
         else:
             st.error("❌ 'gold_use.xlsx' must contain 'Category' and 'Amount' columns.")
