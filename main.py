@@ -67,8 +67,8 @@ with col[2]:
     
 with col[0]:   
     try:
-        use_data_path = "gold_use.xlsx"
-        use_data = pd.read_excel(use_data_path)
+        use_data_path = "gold_use.csv"
+        use_data = pd.read_csv(use_data_path)
     
         if 'Category' in use_data.columns and 'Amount' in use_data.columns:
             #st.subheader("Gold Usage by Sector")
@@ -100,8 +100,7 @@ with col[0]:
         st.error(f"An error occurred while processing Gold Usage data: {e}")
 
 
-    # Load and process Gold Use data from Excel
-    use_data_path = "gold_use.xlsx"
+  
 
     st.subheader("🔥 Gold Investment Heatmap by Region and Year")
 
