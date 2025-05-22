@@ -189,7 +189,7 @@ with col[1]:
     gold_reserves_file = "World_official_gold_holdings_as_of_May2025.csv"  # Make sure the CSV file path is correct
     
     # Streamlit app
-    st.subheader("📊 Gold Reserves by Country")
+    #st.subheader("📊 Gold Reserves by Country")
 
     try:
         df_gold_reserves = pd.read_csv(gold_reserves_file)  # Replace with your filename
@@ -206,7 +206,8 @@ with col[1]:
                 hover_data=["Tonnes"],
                 color_continuous_scale="YlOrRd",
                 range_color=(0, df_gold_reserves["Tonnes"].max()),  # Better color distribution
-                labels={"Tonnes": "Gold Reserves (Tonnes)"}
+                labels={"Tonnes": "Gold Reserves (Tonnes)"},
+                tilte='📊 Gold Reserves by Country'
                 
                 #height=650,  # Custom height
                 #width=1000    # Custom width
