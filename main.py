@@ -20,7 +20,7 @@ st.set_page_config(
 alt.themes.enable("dark")
 
 # App title
-st.title("📊 Gold Price & Mining Production Dashboard")
+st.title(" Gold Price & Mining Production Dashboard")
 
 # Load CSV files directly from the project folder
 price_data_path = "monthly.csv"
