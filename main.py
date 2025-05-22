@@ -137,7 +137,7 @@ with col[0]:
             )
         
             use_fig.update_layout(
-                xaxis=dict(tickangle=0),  # يخلي الكتابة مستقيمة
+                xaxis=dict(tickangle=0,tickfont=dict(size=10)),  # يخلي الكتابة مستقيمة
                 legend_title_text='Sector'  # عنوان للـ legend
             )
         
