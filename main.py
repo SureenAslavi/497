@@ -194,7 +194,7 @@ with col[1]:
                 )
             )
     
-            st.subheader("📊 Gold Reserves by Country")
+            st.subheader("🌎 Gold Reserves by Country")
 
             # ✅ عرض الخريطة بحجم تلقائي
             st.plotly_chart(
@@ -239,7 +239,7 @@ with col[2]:
                 last_20_years_price,
                 x='Year',
                 y='Price',
-                title='Average Annual Gold Price (Last 20 Years)',
+                title='📈Average Annual Gold Price',
                 markers=True
             )
     
