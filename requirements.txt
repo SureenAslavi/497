@@ -8,3 +8,4 @@ altair
 openpyxl
 wordcloud
 re
+Counter
