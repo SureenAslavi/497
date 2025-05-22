@@ -115,7 +115,42 @@ with col[0]:
   
 with col[1]:
 
-   
+  
+    st.subheader("☁️ Word Cloud of Headlines by Country")
+    
+    news_data_path = "Gold_News_Headlines_Dataset.csv"
+    
+    try:
+        news_data = pd.read_csv(news_data_path)
+    
+        if 'Country' in news_data.columns and 'Headline' in news_data.columns:
+            countries = sorted(news_data['Country'].dropna().unique())
+            selected_country = st.selectbox("Select a country:", countries)
+    
+            filtered_news = news_data[news_data['Country'] == selected_country]
+            text = " ".join(filtered_news['Headline'].astype(str))
+    
+            if text.strip():
+                wordcloud = WordCloud(
+                    width=1000,
+                    height=500,
+                    background_color='white',
+                    colormap='plasma'
+                ).generate(text)
+    
+                fig, ax = plt.subplots(figsize=(12, 6))
+                ax.imshow(wordcloud, interpolation='bilinear')
+                ax.axis("off")
+                st.pyplot(fig)
+            else:
+                st.warning("No headlines available for this country.")
+        else:
+            st.error("❌ 'gold_news.csv' must contain 'Country' and 'Headline' columns.")
+    except FileNotFoundError:
+        st.error(f"❌ File '{news_data_path}' not found. Please make sure it's in the same folder as main.py.")
+    except Exception as e:
+        st.error(f"An error occurred while processing the news data: {e}")
+     
     gold_reserves_file = "World_official_gold_holdings_as_of_May2025.csv"  # Make sure the CSV file path is correct
     
     # Streamlit app
@@ -176,40 +211,6 @@ with col[1]:
     except Exception as e:
         st.error(f"❌ Error: {str(e)}")
 
-        st.subheader("☁️ Word Cloud of Headlines by Country")
-    
-    news_data_path = "Gold_News_Headlines_Dataset.csv"
-    
-    try:
-        news_data = pd.read_csv(news_data_path)
-    
-        if 'Country' in news_data.columns and 'Headline' in news_data.columns:
-            countries = sorted(news_data['Country'].dropna().unique())
-            selected_country = st.selectbox("Select a country:", countries)
-    
-            filtered_news = news_data[news_data['Country'] == selected_country]
-            text = " ".join(filtered_news['Headline'].astype(str))
-    
-            if text.strip():
-                wordcloud = WordCloud(
-                    width=1000,
-                    height=500,
-                    background_color='white',
-                    colormap='plasma'
-                ).generate(text)
-    
-                fig, ax = plt.subplots(figsize=(12, 6))
-                ax.imshow(wordcloud, interpolation='bilinear')
-                ax.axis("off")
-                st.pyplot(fig)
-            else:
-                st.warning("No headlines available for this country.")
-        else:
-            st.error("❌ 'gold_news.csv' must contain 'Country' and 'Headline' columns.")
-    except FileNotFoundError:
-        st.error(f"❌ File '{news_data_path}' not found. Please make sure it's in the same folder as main.py.")
-    except Exception as e:
-        st.error(f"An error occurred while processing the news data: {e}")
 
 
 with col[2]:
