@@ -220,9 +220,7 @@ with col[1]:
     
             # Layout improvements
             fig.update_layout(
-                margin=dict(l=0, r=0, t=80, b=0),  # Tight margins
-                title_x=0.5,  # Center title
-                title_font=dict(size=24),
+                margin=dict(l=0, r=0, t=50, b=0),  # Tight margins
                 coloraxis_colorbar=dict(
                     thickness=15,
                     len=0.75,
