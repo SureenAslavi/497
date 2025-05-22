@@ -206,11 +206,7 @@ with col[1]:
                 hover_data=["Tonnes"],
                 color_continuous_scale="YlOrRd",
                 range_color=(0, df_gold_reserves["Tonnes"].max()),  # Better color distribution
-                labels={"Tonnes": "Gold Reserves (Tonnes)"},
-                title='📊 Gold Reserves by Country'
-                
-                #height=650,  # Custom height
-                #width=1000    # Custom width
+                labels={"Tonnes": "Gold Reserves (Tonnes)"}h
             )
     
             # Enhanced map styling
@@ -238,7 +234,7 @@ with col[1]:
             with st.container():
                 st.plotly_chart(
                     fig, 
-                    use_container_width=False,  # Fills container
+                    use_container_width=True,  # Fills container
                     config={'displayModeBar': False}  # Cleaner view
                 )
                 
