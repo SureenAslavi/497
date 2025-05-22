@@ -141,7 +141,7 @@ with col[2]:
         legend_title_text='Sector'  # عنوان للـ legend
     )
 
-st.plotly_chart(use_fig, use_container_width=True)
+    st.plotly_chart(use_fig, use_container_width=True)
 
         else:
             st.error("❌ 'gold_use.xlsx' must contain 'Category' and 'Amount' columns.")
