@@ -26,7 +26,7 @@ st.title("📊 Gold Price & Mining Production Dashboard")
 price_data_path = "monthly.csv"
 production_data_path = "Gold-Mining-Production-Volumes-Data-2024.xlsx"
 
-col = st.columns((4, 10, 4), gap='medium')
+col = st.columns((3,4,2), gap='medium')
 with col[0]:
 # Load and process Gold Price data
     try:
