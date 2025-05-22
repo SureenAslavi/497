@@ -126,22 +126,22 @@ with col[2]:
             # Sort the data by 'Amount' in descending order
             use_data = use_data.sort_values(by='Amount', ascending=False)
             # Create a line plot using Plotly
-        use_fig = px.bar(
-        use_data,
-        x='Category',
-        y='Amount',
-        title='Gold Usage by Sector',
-        labels={'Amount': 'Gold Use (Tonnes)', 'Category': 'Sector'},
-        color='Category',  # كل عمود بلون مختلف
-        color_discrete_sequence=px.colors.qualitative.Set2  # أو اختاري غيرها مثل 'Pastel', 'Bold', إلخ
-    )
+            use_fig = px.bar(
+            use_data,
+            x='Category',
+            y='Amount',
+            title='Gold Usage by Sector',
+            labels={'Amount': 'Gold Use (Tonnes)', 'Category': 'Sector'},
+            color='Category',  # كل عمود بلون مختلف
+            color_discrete_sequence=px.colors.qualitative.Set2  # أو اختاري غيرها مثل 'Pastel', 'Bold', إلخ
+        )
+        
+        use_fig.update_layout(
+            xaxis=dict(tickangle=0),  # يخلي الكتابة مستقيمة
+            legend_title_text='Sector'  # عنوان للـ legend
+        )
     
-    use_fig.update_layout(
-        xaxis=dict(tickangle=0),  # يخلي الكتابة مستقيمة
-        legend_title_text='Sector'  # عنوان للـ legend
-    )
-
-    st.plotly_chart(use_fig, use_container_width=True)
+        st.plotly_chart(use_fig, use_container_width=True)
 
         else:
             st.error("❌ 'gold_use.xlsx' must contain 'Category' and 'Amount' columns.")
