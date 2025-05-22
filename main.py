@@ -118,7 +118,7 @@ with col[0]:
   
 with col[1]:
 
-    st.subheader("☁️ Word Cloud of Cleaned Headlines by Country")
+    st.subheader("☁️ Word Cloud of Headlines by Country")
     
     news_data_path = "Gold_News_Headlines_Dataset.csv"
     
