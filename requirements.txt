@@ -7,3 +7,4 @@ seaborn
 altair
 openpyxl
 wordcloud
+re
