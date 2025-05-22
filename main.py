@@ -206,8 +206,8 @@ with col[1]:
                 hover_data=["Tonnes"],
                 color_continuous_scale="YlOrRd",
                 range_color=(0, df_gold_reserves["Tonnes"].max()),  # Better color distribution
-                labels={"Tonnes": "Gold Reserves (Tonnes)"},
-                title='test'
+                labels={"Tonnes": "Gold Reserves (Tonnes)"}
+                
                 #height=650,  # Custom height
                 #width=1000    # Custom width
             )
