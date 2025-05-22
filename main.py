@@ -37,7 +37,7 @@ with col[0]:
             #st.subheader("Gold Usage by Sector")
             # Sort the data by 'Amount' in descending order
             use_data = use_data.sort_values(by='Amount', ascending=False)
-            st.subheader("📊Gold Usage by Sector")
+            st.subheader("Gold Usage by Sector")
             # Create a line plot using Plotly
             use_fig = px.bar(
             use_data,
