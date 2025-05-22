@@ -8,6 +8,7 @@ import numpy as np
 from datetime import datetime
 from wordcloud import WordCloud
 import re
+from collections import Counter
 
 # Streamlit page configuration
 st.set_page_config(
