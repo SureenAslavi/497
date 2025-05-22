@@ -206,7 +206,7 @@ with col[1]:
                 hover_data=["Tonnes"],
                 color_continuous_scale="YlOrRd",
                 range_color=(0, df_gold_reserves["Tonnes"].max()),  # Better color distribution
-                labels={"Tonnes": "Gold Reserves (Tonnes)"}h
+                labels={"Tonnes": "Gold Reserves (Tonnes)"}
             )
     
             # Enhanced map styling
@@ -230,13 +230,14 @@ with col[1]:
                 )
             )
     
-            # Display with custom container
-            with st.container():
-                st.plotly_chart(
-                    fig, 
-                    use_container_width=True,  # Fills container
-                    config={'displayModeBar': False}  # Cleaner view
-                )
+            st.subheader("📊 Gold Reserves by Country")
+
+            # ✅ عرض الخريطة بحجم تلقائي
+            st.plotly_chart(
+                fig, 
+                use_container_width=True,
+                config={'displayModeBar': False}
+            )
                 
         else:
             st.error("❌ CSV must contain 'Country' and 'Tonnes' columns")
