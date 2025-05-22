@@ -20,7 +20,7 @@ st.set_page_config(
 alt.themes.enable("dark")
 
 # App title
-st.title(" Gold Price & Mining Production Dashboard")
+st.title("📊 Gold Price & Mining Production Dashboard")
 
 # Load CSV files directly from the project folder
 price_data_path = "monthly.csv"
@@ -37,12 +37,13 @@ with col[0]:
             #st.subheader("Gold Usage by Sector")
             # Sort the data by 'Amount' in descending order
             use_data = use_data.sort_values(by='Amount', ascending=False)
+            st.subheader("🔥 Gold Investment Heatmap by Region and Year")
             # Create a line plot using Plotly
             use_fig = px.bar(
             use_data,
             x='Category',
             y='Amount',
-            title='Gold Usage by Sector',
+            #title='Gold Usage by Sector',
             labels={'Amount': 'Gold Use (Tonnes)', 'Category': 'Sector'},
             color='Category',  # كل عمود بلون مختلف
             color_discrete_sequence=px.colors.qualitative.Set2  # أو اختاري غيرها مثل 'Pastel', 'Bold', إلخ
