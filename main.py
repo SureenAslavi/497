@@ -27,43 +27,6 @@ price_data_path = "monthly.csv"
 production_data_path = "Gold-Mining-Production-Volumes-Data-2024.xlsx"
 
 col = st.columns((4,4,4), gap='medium')
-with col[2]:
-# Load and process Gold Price data
-    try:
-        price_data = pd.read_csv(price_data_path)
-    
-        # Check for required columns
-        if 'Date' in price_data.columns and 'Price' in price_data.columns:
-            # Convert 'Date' column to datetime
-            price_data['Date'] = pd.to_datetime(price_data['Date'], format='%Y-%m', errors='coerce')
-            price_data = price_data.dropna(subset=['Date'])
-
-            price_data['Year'] = price_data['Date'].dt.year
-    
-            yearly_avg_price = price_data.groupby('Year')['Price'].mean().reset_index()
-    
-            # Get the current year
-            current_year = datetime.now().year
-    
-            # Filter data for the last 20 years
-            last_20_years_price = yearly_avg_price[yearly_avg_price['Year'] >= (current_year - 20)]
-    
-            # Plot Gold Price Chart
-            price_fig = px.line(
-                last_20_years_price,
-                x='Year',
-                y='Price',
-                title='Average Annual Gold Price (Last 20 Years)',
-                markers=True
-            )
-    
-            st.plotly_chart(price_fig, use_container_width=True)
-        else:
-            st.error("❌ 'monthly.csv' must contain 'Date' and 'Price' columns.")
-    except FileNotFoundError:
-        st.error(f"❌ File '{price_data_path}' not found. Please make sure it's in the same folder as main.py.")
-    except Exception as e:
-        st.error(f"An error occurred while processing Gold Price data: {e}")
     
 with col[0]:   
     try:
@@ -152,41 +115,7 @@ with col[0]:
   
 with col[1]:
 
-    st.subheader("☁️ Word Cloud of Headlines by Country")
-    
-    news_data_path = "Gold_News_Headlines_Dataset.csv"
-    
-    try:
-        news_data = pd.read_csv(news_data_path)
-    
-        if 'Country' in news_data.columns and 'Headline' in news_data.columns:
-            countries = sorted(news_data['Country'].dropna().unique())
-            selected_country = st.selectbox("Select a country:", countries)
-    
-            filtered_news = news_data[news_data['Country'] == selected_country]
-            text = " ".join(filtered_news['Headline'].astype(str))
-    
-            if text.strip():
-                wordcloud = WordCloud(
-                    width=1000,
-                    height=500,
-                    background_color='white',
-                    colormap='plasma'
-                ).generate(text)
-    
-                fig, ax = plt.subplots(figsize=(12, 6))
-                ax.imshow(wordcloud, interpolation='bilinear')
-                ax.axis("off")
-                st.pyplot(fig)
-            else:
-                st.warning("No headlines available for this country.")
-        else:
-            st.error("❌ 'gold_news.csv' must contain 'Country' and 'Headline' columns.")
-    except FileNotFoundError:
-        st.error(f"❌ File '{news_data_path}' not found. Please make sure it's in the same folder as main.py.")
-    except Exception as e:
-        st.error(f"An error occurred while processing the news data: {e}")
-
+   
     gold_reserves_file = "World_official_gold_holdings_as_of_May2025.csv"  # Make sure the CSV file path is correct
     
     # Streamlit app
@@ -246,3 +175,79 @@ with col[1]:
         st.error("❌ File not found. Please check 'gold_reserves.csv' exists")
     except Exception as e:
         st.error(f"❌ Error: {str(e)}")
+
+
+with col[2]:
+# Load and process Gold Price data
+    try:
+        price_data = pd.read_csv(price_data_path)
+    
+        # Check for required columns
+        if 'Date' in price_data.columns and 'Price' in price_data.columns:
+            # Convert 'Date' column to datetime
+            price_data['Date'] = pd.to_datetime(price_data['Date'], format='%Y-%m', errors='coerce')
+            price_data = price_data.dropna(subset=['Date'])
+
+            price_data['Year'] = price_data['Date'].dt.year
+    
+            yearly_avg_price = price_data.groupby('Year')['Price'].mean().reset_index()
+    
+            # Get the current year
+            current_year = datetime.now().year
+    
+            # Filter data for the last 20 years
+            last_20_years_price = yearly_avg_price[yearly_avg_price['Year'] >= (current_year - 20)]
+    
+            # Plot Gold Price Chart
+            price_fig = px.line(
+                last_20_years_price,
+                x='Year',
+                y='Price',
+                title='Average Annual Gold Price (Last 20 Years)',
+                markers=True
+            )
+    
+            st.plotly_chart(price_fig, use_container_width=True)
+        else:
+            st.error("❌ 'monthly.csv' must contain 'Date' and 'Price' columns.")
+    except FileNotFoundError:
+        st.error(f"❌ File '{price_data_path}' not found. Please make sure it's in the same folder as main.py.")
+    except Exception as e:
+        st.error(f"An error occurred while processing Gold Price data: {e}")
+
+
+     st.subheader("☁️ Word Cloud of Headlines by Country")
+    
+    news_data_path = "Gold_News_Headlines_Dataset.csv"
+    
+    try:
+        news_data = pd.read_csv(news_data_path)
+    
+        if 'Country' in news_data.columns and 'Headline' in news_data.columns:
+            countries = sorted(news_data['Country'].dropna().unique())
+            selected_country = st.selectbox("Select a country:", countries)
+    
+            filtered_news = news_data[news_data['Country'] == selected_country]
+            text = " ".join(filtered_news['Headline'].astype(str))
+    
+            if text.strip():
+                wordcloud = WordCloud(
+                    width=1000,
+                    height=500,
+                    background_color='white',
+                    colormap='plasma'
+                ).generate(text)
+    
+                fig, ax = plt.subplots(figsize=(12, 6))
+                ax.imshow(wordcloud, interpolation='bilinear')
+                ax.axis("off")
+                st.pyplot(fig)
+            else:
+                st.warning("No headlines available for this country.")
+        else:
+            st.error("❌ 'gold_news.csv' must contain 'Country' and 'Headline' columns.")
+    except FileNotFoundError:
+        st.error(f"❌ File '{news_data_path}' not found. Please make sure it's in the same folder as main.py.")
+    except Exception as e:
+        st.error(f"An error occurred while processing the news data: {e}")
+
