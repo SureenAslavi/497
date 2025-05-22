@@ -89,7 +89,6 @@ with col[2]:
                 y=heatmap_data.index,
                 color_continuous_scale='YlOrRd',  # Gold-appropriate color scale
                 aspect="auto",
-                title='Gold Investment Volume by Region and Year (Million USD)'
             )
             
             # Customize x-axis to show ALL years
@@ -208,7 +207,7 @@ with col[1]:
                 color_continuous_scale="YlOrRd",
                 range_color=(0, df_gold_reserves["Tonnes"].max()),  # Better color distribution
                 labels={"Tonnes": "Gold Reserves (Tonnes)"},
-                title="<b>Gold Reserves by Country (Tonnes)</b>"
+                
                 #height=650,  # Custom height
                 #width=1000    # Custom width
             )
