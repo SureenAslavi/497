@@ -7,5 +7,4 @@ seaborn
 altair
 openpyxl
 wordcloud
-re
-Counter
+
