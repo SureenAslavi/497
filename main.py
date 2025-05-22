@@ -37,11 +37,9 @@ with col[2]:
             # Convert 'Date' column to datetime
             price_data['Date'] = pd.to_datetime(price_data['Date'], format='%Y-%m', errors='coerce')
             price_data = price_data.dropna(subset=['Date'])
-    
-            # Extract year
+
             price_data['Year'] = price_data['Date'].dt.year
     
-            # Calculate yearly average
             yearly_avg_price = price_data.groupby('Year')['Price'].mean().reset_index()
     
             # Get the current year
@@ -66,6 +64,41 @@ with col[2]:
         st.error(f"❌ File '{price_data_path}' not found. Please make sure it's in the same folder as main.py.")
     except Exception as e:
         st.error(f"An error occurred while processing Gold Price data: {e}")
+    
+with col[0]:   
+    try:
+        use_data = pd.read_excel(use_data_path)
+    
+        if 'Category' in use_data.columns and 'Amount' in use_data.columns:
+            #st.subheader("Gold Usage by Sector")
+            # Sort the data by 'Amount' in descending order
+            use_data = use_data.sort_values(by='Amount', ascending=False)
+            # Create a line plot using Plotly
+            use_fig = px.bar(
+            use_data,
+            x='Category',
+            y='Amount',
+            title='Gold Usage by Sector',
+            labels={'Amount': 'Gold Use (Tonnes)', 'Category': 'Sector'},
+            color='Category',  # كل عمود بلون مختلف
+            color_discrete_sequence=px.colors.qualitative.Set2  # أو اختاري غيرها مثل 'Pastel', 'Bold', إلخ
+            )
+        
+            use_fig.update_layout(
+                xaxis=dict(tickangle=0,tickfont=dict(size=10)),  # يخلي الكتابة مستقيمة
+                legend_title_text='Sector'  # عنوان للـ legend
+            )
+        
+            st.plotly_chart(use_fig, use_container_width=True)
+
+        else:
+            st.error("❌ 'gold_use.xlsx' must contain 'Category' and 'Amount' columns.")
+    except FileNotFoundError:
+        st.error(f"❌ File '{use_data_path}' not found. Please make sure it's in the same folder as main.py.")
+    except Exception as e:
+        st.error(f"An error occurred while processing Gold Usage data: {e}")
+
+
     # Load and process Gold Use data from Excel
     use_data_path = "gold_use.xlsx"
 
@@ -116,38 +149,6 @@ with col[2]:
         st.error("❌ CSV file not found. Please ensure it's in your project directory.")
     except Exception as e:
         st.error(f"An error occurred while generating the heatmap: {e}")
-with col[0]:   
-    try:
-        use_data = pd.read_excel(use_data_path)
-    
-        if 'Category' in use_data.columns and 'Amount' in use_data.columns:
-            #st.subheader("Gold Usage by Sector")
-            # Sort the data by 'Amount' in descending order
-            use_data = use_data.sort_values(by='Amount', ascending=False)
-            # Create a line plot using Plotly
-            use_fig = px.bar(
-            use_data,
-            x='Category',
-            y='Amount',
-            title='Gold Usage by Sector',
-            labels={'Amount': 'Gold Use (Tonnes)', 'Category': 'Sector'},
-            color='Category',  # كل عمود بلون مختلف
-            color_discrete_sequence=px.colors.qualitative.Set2  # أو اختاري غيرها مثل 'Pastel', 'Bold', إلخ
-            )
-        
-            use_fig.update_layout(
-                xaxis=dict(tickangle=0,tickfont=dict(size=10)),  # يخلي الكتابة مستقيمة
-                legend_title_text='Sector'  # عنوان للـ legend
-            )
-        
-            st.plotly_chart(use_fig, use_container_width=True)
-
-        else:
-            st.error("❌ 'gold_use.xlsx' must contain 'Category' and 'Amount' columns.")
-    except FileNotFoundError:
-        st.error(f"❌ File '{use_data_path}' not found. Please make sure it's in the same folder as main.py.")
-    except Exception as e:
-        st.error(f"An error occurred while processing Gold Usage data: {e}")
   
 with col[1]:
 
