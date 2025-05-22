@@ -67,6 +67,7 @@ with col[2]:
     
 with col[0]:   
     try:
+        use_data_path = "gold_use.xlsx"
         use_data = pd.read_excel(use_data_path)
     
         if 'Category' in use_data.columns and 'Amount' in use_data.columns:
