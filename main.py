@@ -26,7 +26,7 @@ st.title("📊 Gold Price & Mining Production Dashboard")
 price_data_path = "monthly.csv"
 production_data_path = "Gold-Mining-Production-Volumes-Data-2024.xlsx"
 
-col = st.columns((3,5,2), gap='medium')
+col = st.columns((4,5,2), gap='medium')
     
 with col[0]:   
     try:
@@ -176,10 +176,7 @@ with col[1]:
     except Exception as e:
         st.error(f"❌ Error: {str(e)}")
 
-
-with col[2]:
-
-    st.subheader("☁️ Word Cloud of Headlines by Country")
+        st.subheader("☁️ Word Cloud of Headlines by Country")
     
     news_data_path = "Gold_News_Headlines_Dataset.csv"
     
@@ -213,6 +210,9 @@ with col[2]:
         st.error(f"❌ File '{news_data_path}' not found. Please make sure it's in the same folder as main.py.")
     except Exception as e:
         st.error(f"An error occurred while processing the news data: {e}")
+
+
+with col[2]:
 
     try:
         price_data = pd.read_csv(price_data_path)
