@@ -37,7 +37,7 @@ with col[0]:
             #st.subheader("Gold Usage by Sector")
             # Sort the data by 'Amount' in descending order
             use_data = use_data.sort_values(by='Amount', ascending=False)
-            st.subheader("Gold Usage by Sector")
+            st.subheader("📊Gold Usage by Sector")
             # Create a line plot using Plotly
             use_fig = px.bar(
             use_data,
@@ -224,6 +224,7 @@ with col[2]:
             # Convert 'Date' column to datetime
             price_data['Date'] = pd.to_datetime(price_data['Date'], format='%Y-%m', errors='coerce')
             price_data = price_data.dropna(subset=['Date'])
+            st.subheader("📈Average Annual Gold Price")
 
             price_data['Year'] = price_data['Date'].dt.year
     
@@ -240,7 +241,7 @@ with col[2]:
                 last_20_years_price,
                 x='Year',
                 y='Price',
-                title='📈Average Annual Gold Price',
+                #title='📈Average Annual Gold Price',
                 markers=True
             )
     
