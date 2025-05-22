@@ -37,7 +37,7 @@ with col[0]:
             #st.subheader("Gold Usage by Sector")
             # Sort the data by 'Amount' in descending order
             use_data = use_data.sort_values(by='Amount', ascending=False)
-            st.subheader("Gold Usage by Sector")
+            st.subheader("📊Gold Usage by Sector")
             # Create a line plot using Plotly
             use_fig = px.bar(
             use_data,
@@ -115,9 +115,6 @@ with col[0]:
         st.error(f"An error occurred while generating the heatmap: {e}")
   
 with col[1]:
-
-  
-    st.set_page_config(page_title="Gold News Word Cloud", layout="centered")
 
     st.subheader("☁️ Word Cloud of Cleaned Headlines by Country")
     
