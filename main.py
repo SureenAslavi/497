@@ -189,7 +189,7 @@ with col[1]:
     gold_reserves_file = "World_official_gold_holdings_as_of_May2025.csv"  # Make sure the CSV file path is correct
     
     # Streamlit app
-    st.title("📊 Gold Reserves by Country")
+    st.subheader("📊 Gold Reserves by Country")
 
     try:
         df_gold_reserves = pd.read_csv(gold_reserves_file)  # Replace with your filename
