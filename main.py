@@ -215,7 +215,8 @@ with col[1]:
                 showcountries=True,
                 showframe=False,
                 landcolor="lightgray",
-                subunitcolor="white"
+                subunitcolor="white",
+                fitbounds="locations"
             )
     
             # Layout improvements
@@ -223,7 +224,7 @@ with col[1]:
                 margin=dict(l=0, r=0, t=4, b=0),  # Tight margins
                 coloraxis_colorbar=dict(
                     thickness=15,
-                    len=0.75,
+                    len=0.5,
                     title_side="right"
                 )
             )
