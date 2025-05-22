@@ -117,9 +117,24 @@ with col[0]:
 with col[1]:
 
   
-    st.subheader("☁️ Word Cloud of Headlines by Country")
+    st.set_page_config(page_title="Gold News Word Cloud", layout="centered")
+
+    st.subheader("☁️ Word Cloud of Cleaned Headlines by Country")
     
     news_data_path = "Gold_News_Headlines_Dataset.csv"
+    
+    # قائمة كلمات التوقف البسيطة
+    basic_stopwords = set([
+        "the", "is", "in", "and", "to", "of", "this", "that", "it", "on", "for",
+        "with", "as", "its", "was", "but", "are", "have", "not", "you", "i"
+    ])
+    
+    def clean_text(text, country):
+        text = text.lower()
+        text = re.sub(r'[^a-z\s]', '', text)
+        text = re.sub(r'\s+', ' ', text).strip()
+        text = re.sub(r'\b' + re.escape(country.lower()) + r'\b', '', text)
+        return text
     
     try:
         news_data = pd.read_csv(news_data_path)
@@ -130,27 +145,33 @@ with col[1]:
     
             filtered_news = news_data[news_data['Country'] == selected_country]
             text = " ".join(filtered_news['Headline'].astype(str))
+            cleaned_text = clean_text(text, selected_country)
     
-            if text.strip():
+            if cleaned_text.strip():
+                tokens = cleaned_text.split()
+                tokens = [word for word in tokens if word not in basic_stopwords and len(word) > 1]
+                word_freq = Counter(tokens)
+    
                 wordcloud = WordCloud(
                     width=1000,
                     height=500,
                     background_color='white',
                     colormap='plasma'
-                ).generate(text)
+                ).generate_from_frequencies(word_freq)
     
                 fig, ax = plt.subplots(figsize=(12, 6))
                 ax.imshow(wordcloud, interpolation='bilinear')
                 ax.axis("off")
+                ax.set_title(f"Gold Market News Word Cloud - {selected_country}", fontsize=20, fontweight='bold')
                 st.pyplot(fig)
             else:
-                st.warning("No headlines available for this country.")
+                st.warning("No valid text to generate a word cloud for this country.")
         else:
-            st.error("❌ 'gold_news.csv' must contain 'Country' and 'Headline' columns.")
+            st.error("❌ The CSV must contain 'Country' and 'Headline' columns.")
     except FileNotFoundError:
-        st.error(f"❌ File '{news_data_path}' not found. Please make sure it's in the same folder as main.py.")
+        st.error(f"❌ File '{news_data_path}' not found.")
     except Exception as e:
-        st.error(f"An error occurred while processing the news data: {e}")
+        st.error(f"⚠️ An error occurred: {e}")
      
     gold_reserves_file = "World_official_gold_holdings_as_of_May2025.csv"  # Make sure the CSV file path is correct
     
