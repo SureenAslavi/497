@@ -27,7 +27,7 @@ price_data_path = "monthly.csv"
 production_data_path = "Gold-Mining-Production-Volumes-Data-2024.xlsx"
 
 col = st.columns((3,4,2), gap='medium')
-with col[0]:
+with col[2]:
 # Load and process Gold Price data
     try:
         price_data = pd.read_csv(price_data_path)
@@ -117,7 +117,7 @@ with col[0]:
         st.error("❌ CSV file not found. Please ensure it's in your project directory.")
     except Exception as e:
         st.error(f"An error occurred while generating the heatmap: {e}")
-with col[2]:   
+with col[0]:   
     try:
         use_data = pd.read_excel(use_data_path)
     
