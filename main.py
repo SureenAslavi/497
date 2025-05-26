@@ -217,33 +217,44 @@ with col[1]:
 
 
 with col[2]:
-
     try:
         price_data = pd.read_csv(price_data_path)
-    
+
         if 'Date' in price_data.columns and 'Price' in price_data.columns:
             price_data['Date'] = pd.to_datetime(price_data['Date'], format='%Y-%m', errors='coerce')
             price_data = price_data.dropna(subset=['Date'])
+
             st.subheader("📈Average Annual Gold Price")
 
             price_data['Year'] = price_data['Date'].dt.year
-    
             yearly_avg_price = price_data.groupby('Year')['Price'].mean().reset_index()
-    
+
             current_year = datetime.now().year
-    
-            last_20_years_price = yearly_avg_price[yearly_avg_price['Year'] >= (current_year - 20)]
-    
+            min_year = int(yearly_avg_price['Year'].min())
+
+           
+            years_range = st.slider(
+                "Select number of past years to display",
+                min_value=1,
+                max_value=current_year - min_year,
+                value=20  
+            )
+
+            filtered_price = yearly_avg_price[yearly_avg_price['Year'] >= (current_year - years_range)]
+
             price_fig = px.line(
-                last_20_years_price,
+                filtered_price,
                 x='Year',
                 y='Price',
-                markers=True
+                markers=True,
+                title=f"Average Gold Price in the Last {years_range} Years"
             )
-    
+
             st.plotly_chart(price_fig, use_container_width=True)
+
         else:
             st.error("❌ 'monthly.csv' must contain 'Date' and 'Price' columns.")
+
     except FileNotFoundError:
         st.error(f"❌ File '{price_data_path}' not found. Please make sure it's in the same folder as main.py.")
     except Exception as e:
