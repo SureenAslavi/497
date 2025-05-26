@@ -51,7 +51,7 @@ with col[0]:
             st.plotly_chart(use_fig, use_container_width=True)
 
         else:
-            st.error("❌ 'gold_use.xlsx' must contain 'Category' and 'Amount' columns.")
+            st.error("❌ 'gold_use.csv' must contain 'Category' and 'Amount' columns.")
     except FileNotFoundError:
         st.error(f"❌ File '{use_data_path}' not found. Please make sure it's in the same folder as main.py.")
     except Exception as e:
