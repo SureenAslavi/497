@@ -262,7 +262,7 @@ with col[2]:
 
 '''
 Overview:
-This code creates a dashboard to explore gold prices, mining, usage, investment, news, and reserves using Streamlit and data from multiple CSV/Excel files
+This code creates a dashboard to explore gold prices, usage, investment, news, and reserves using Streamlit and data from multiple CSV/Excel files
 
 Dashboard Layout:
     The page is split into 3 columns:
@@ -284,13 +284,13 @@ Dashboard Layout:
             -investment in the Middle East and North America is the opposite of Asia and Europe in most years
             -In 2018, Asia had the highest gold investment
             -while the Middle East had the lowest in 2019
-            -By 2022, North America became one of the top investors
+            -By 2021, North America became one of the top investors
         
 -Column 1 – News & Reserves
     -Word Cloud by Country
         used news headlines from Gold_News_Headlines_Dataset.csv
         You choose a country , it cleans the text then shows a word cloud of most common words in news
-        and we can see that: The most frequent words in most counties gold news headlines (after removing stopwords were:price, surge, market, uncertainty, grow, sees, and highest
+        and we can see that: The most frequent words in most counties gold news headlines (after removing stopwords) were:price, surge, market, uncertainty, grow, sees, and highest
     - Choropleth Map of Gold Reserves
         used World_official_gold_holdings_as_of_May2025.csv
         Shows how much gold each country holds on a world map
