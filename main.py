@@ -259,3 +259,50 @@ with col[2]:
         st.error(f"❌ File '{price_data_path}' not found. Please make sure it's in the same folder as main.py.")
     except Exception as e:
         st.error(f"An error occurred while processing Gold Price data: {e}")
+
+'''
+Overview:
+This code creates a dashboard to explore gold prices, mining, usage, investment, news, and reserves using Streamlit and data from multiple CSV/Excel files
+
+Dashboard Layout:
+    The page is split into 3 columns:
+        -col[0]: Gold usage and investments
+        -col[1]: Word cloud + gold reserves map
+        -col[2]: Gold price chart
+
+
+-Column 0 – Usage & Investment
+    -Gold Usage Bar Chart
+        used gold_use.csv
+        Shows how much gold is used by each sector (bar chart)
+        and we can see that gold is used mostly in jewllery then central banks then invesment then technology
+        
+    -Investment Heatmap
+        used Gold_Investment_Statistics_Dataset.csv
+        Shows how much gold investment happened in each region by year (heatmap)
+        and we can see that:
+            -investment in the Middle East and North America is the opposite of Asia and Europe in most years
+            -In 2018, Asia had the highest gold investment
+            -while the Middle East had the lowest in 2019
+            -By 2022, North America became one of the top investors
+        
+-Column 1 – News & Reserves
+    -Word Cloud by Country
+        used news headlines from Gold_News_Headlines_Dataset.csv
+        You choose a country , it cleans the text then shows a word cloud of most common words in news
+        and we can see that: The most frequent words in most counties gold news headlines (after removing stopwords were:price, surge, market, uncertainty, grow, sees, and highest
+    - Choropleth Map of Gold Reserves
+        used World_official_gold_holdings_as_of_May2025.csv
+        Shows how much gold each country holds on a world map
+        we can see that the USA holds the largest gold reserves by far, followed by Germany and then other countries with much lower levels.
+
+-Column 2 – Gold Price Trend
+    used monthly.csv
+    Calculates the average gold price per year
+    You choose how many years to display (with a slider)
+    Shows a line chart of average gold prices over time
+    we can see that after COVID-19, gold started to rise noticeably.
+
+
+
+'''
